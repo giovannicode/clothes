@@ -1,0 +1,135 @@
+<?php
+$r = mysqli_query($dbc, "SELECT * FROM categories");
+if(!$r) echo mysqli_error($dbc);
+?>
+
+<div class="leftNav">
+ <h3>Search By</h3>
+ <div><h4>On Sale</h4>
+ <ul>
+   <li>Black tees</li>
+   <li>Fancy Shirts</li>
+   <li>Cool Pants</li>
+   <li>Crazy Shoes</li>
+ </ul>
+ </div>
+ <div><h4>Colors</h4>
+ <ul>
+   <li>Red</li>
+   <li>Green</li>
+   <li>Blue</li>
+   <li>Black</li>
+ </ul>
+ </div>
+ <div><h4>Categories</h4>
+ <ul>
+  <?php
+while($row = mysqli_fetch_array($r, MYSQLI_ASSOC))
+{
+   if($r)
+   {
+      echo '<li><a href="browse.php?categories=' . $row['id'] . '&page=1">' . $row['name'] . '</a></li>';
+   }
+}
+?> 
+ </ul>
+ </div>
+</div>
+<div class="searchRefiner">
+ <?php
+   if(isset($_GET['categories']))
+{
+   echo '<form action="browse.php" method="get" accept-charset=utf-"8">';
+   
+   echo'<div>
+  <select name="price">
+   <option value="ASC">Low to high</option>
+   <option value="DESC">High to low</option>
+   </select>
+ </div>
+ <div>
+   <select name="color">
+   <option value="blue">Blue</option>
+   <option value="brown">Brown</option>
+   <option value="red">Red</option>
+   <option value="white">white</option>
+   </select>
+ </div>
+ <input type="hidden" name="categories" value="' . $_GET['categories'] . '"/>
+ <input type="hidden" name="page" value="' . $_GET['page'] . '"/>
+ <div><input type="submit" value="go"/></div>
+ </form>';
+}
+?>
+</div>
+<div class="mainContent">
+ <?php
+ if(isset($_GET['categories']) && !(isset($_GET['price'])))
+{
+
+$q = mysqli_query($dbc, "SELECT name FROM categories WHERE id = " . $_GET['categories']);
+$row = mysqli_fetch_array($q, MYSQLI_ASSOC);
+
+
+$r = mysqli_query($dbc, "SELECT * FROM " .  $row['name'] . " LIMIT 8  OFFSET " . 8 * ($_GET['page'] - 1));
+if(!$r) echo mysqli_error($dbc);
+
+while($row = mysqli_fetch_array($r, MYSQLI_ASSOC))
+{
+   if($r)
+   {
+      echo '<div><a href="viewItem.php?categories=' . $_GET['categories'] . '&id=' . $row['id'] . '">
+ <img src="' . $row['image']. '" width="190px" height="320px"/></a>
+ <p><Strong>' . $row['name'] . '</Strong></p>
+ <p><Strong>$' . $row['price'] . '</Strong></p>
+ </div>';
+   }
+}
+}
+elseif(isset($_GET['price']))
+{
+$q = mysqli_query($dbc, "SELECT name FROM categories WHERE id = " . $_GET['categories']);
+$row = mysqli_fetch_array($q, MYSQLI_ASSOC);
+
+
+$r = mysqli_query($dbc, "SELECT * FROM " .  $row['name'] . " ORDER BY price " . $_GET['price'] . " LIMIT 8  OFFSET " . 8 * ($_GET['page'] - 1));
+if(!$r) echo mysqli_error($dbc);
+
+while($row = mysqli_fetch_array($r, MYSQLI_ASSOC))
+{
+   if($r)
+   {
+      echo '<div><a href="viewItem.php?categories=' . $_GET['categories'] . '&id=' . $row['id'] . '">
+ <img src="' . $row['image']. '" width="190px" height="320px"/></a>
+ <p><Strong>' . $row['name'] . '</Strong></p>
+ <p><Strong>$' . $row['price'] . '</Strong></p>
+ </div>';
+   }
+}
+}
+?>
+<div class="catalogNavigator">
+ <ul>
+ <?php
+ if(isset($_GET['categories']) && !(isset($_GET['price'])))
+{
+ $count = 1;
+ while($count <= 5)
+ {
+   echo '<li><a href="?categories=' . $_GET['categories']. '&page=' . $count . '">' . $count . '</a></li>';
+   $count++;
+  }
+}
+ elseif(isset($_GET['price']))
+{
+ $count = 1;
+ while($count <= 5)
+ {
+   echo '<li><a href="?categories=' . $_GET['categories']. '&page=' . $count . '&price=' . $_GET['price'] . '">' . $count . '</a></li>';
+   $count++;
+  }
+}
+ ?>
+ </ul>
+</div>     
+</div>

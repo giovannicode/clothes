@@ -1,0 +1,16 @@
+<div class="itemView">
+<?php
+
+$q = mysqli_query($dbc, "SELECT tableName FROM categories WHERE id = " . $_GET['categories']);
+$row = mysqli_fetch_array($q, MYSQLI_ASSOC);
+$tableName = $row['tableName'];
+
+$q = mysqli_query($dbc, "SELECT * FROM " . $tableName . " WHERE id = " . $_GET['id']);
+$row = mysqli_fetch_array($q, MYSQLI_ASSOC);
+
+echo '<img src="' . $row['image'] . '"/>';
+echo '<p>' . $row['description'] . '</p>';
+echo '<p><strong>' . $row['price'] . '</strong></p>';
+echo '<a href="cart.php?action=add&categories=' . $_GET['categories'] . '&id=' . $_GET['id'] . '"><input type="button" value="Add to Cart"/></a>';
+?>
+</div>

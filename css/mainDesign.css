@@ -1,0 +1,70 @@
+body {
+	background-color: rgb(255, 255, 255);
+}
+
+.UniversalContainer{
+}
+
+.header{
+	}
+
+h1{
+	font-size: 72px;
+}
+
+h2{ 
+	font-size: 48px;
+	background-color: red;
+}
+
+.leftNav{
+	background-color: rgb(0,0,0);
+	width: 160px;
+	height: 1300px;
+}
+
+.leftNav h3{
+	background-color: rgb(25, 50,255);
+	color: white;
+	}
+.leftNav h4{
+	color: white;
+	font-style: italic;
+	font-size: 20px;
+}
+
+.leftNav div ul li a{
+	text-decoration: none;
+	color: white;
+}
+
+.leftNav div ul li a:Hover{
+	background-color: gray;
+}
+
+.searchRefiner{
+	float: left;
+	width: 800px;
+	height: 30px;
+}
+
+.searchRefiner div{
+	float: left;
+}
+
+.mainContent div{
+	border: 1px black solid;
+}
+
+.mainContent img{
+	border: 1px red solid;
+	}
+	
+.catalogNavigator ul{
+	list-style-type: none;
+	}
+.catalogNavigator li{
+	float: left;
+	width: 20px;
+}
+	

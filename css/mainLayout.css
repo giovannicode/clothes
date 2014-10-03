@@ -1,0 +1,76 @@
+.UniversalContainer{
+	width: 975px;
+	margin-left: auto;
+	margin-right: auto;
+	}
+
+
+.header{
+	float: left;
+	width: 975px;
+	height: 300px;
+	background-color: black;
+}
+
+.header h1{
+    color: green;
+}
+
+.header h2{
+	color: white;
+}
+
+.horinav{
+	width: 975px;
+	height: 75px;
+	background-color: green;
+}
+
+.leftNav{
+	float: left;
+	height: 800px;
+}
+
+.searchRefiner{
+	float: left;
+}
+
+.searchRefiner div{
+	float: left;
+}
+
+.mainContent div{
+	float: left;
+}
+
+.footer {
+	float: left;
+    margin-left: auto;
+    margin-right: auto;
+    width: 975px;
+    height: 300px;
+    background-color: gray;
+}
+
+.footer ul{
+float: left;
+}
+
+/*cart.html*/
+.items div{
+	float: left;
+	width: 975px;
+}
+
+.items div div{
+	width: 150px;
+}
+
+/*viewItem.html*/
+.itemView img{
+	float: left;
+}
+
+
+
+

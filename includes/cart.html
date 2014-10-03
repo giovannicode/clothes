@@ -1,0 +1,120 @@
+<?php
+if(isset($_COOKIE['SESSION']))
+{
+   $uid = $_COOKIE['SESSION'];
+   echo 'cookie was already set';
+}
+else
+{
+   $uid = md5(uniqid('biped', true));
+   echo 'cookie was just set';
+}
+
+setcookie('SESSION', $uid, time()+(60*60*24*1));
+
+if($_GET['action'] == 'add')
+{
+   $q = mysqli_query($dbc, "SELECT tableName FROM categories WHERE id = " . $_GET['categories']);
+   $row = mysqli_fetch_array($q, MYSQLI_ASSOC);
+   $tableName = $row['tableName'];
+
+   $q = mysqli_query($dbc, "INSERT INTO carts VALUES ('" . $uid . "','" .  $row['tableName'] . "','" . $_GET['id'] . "')");
+   echo "INSERT INTO carts VALUES (" . $uid . "," .  $row['tableName'] . "," . $_GET['id'] . ")";
+   echo mysqli_error($dbc);
+}
+?>
+
+<div class="cartView">
+<h3>Shopping cart</h3>
+<form method="post" action="checkout.php">
+ <div class="items">
+  <div>
+  <?php
+  $q = mysqli_query($dbc, "SELECT tableName, product_id FROM carts WHERE user_cookie_id = '" . $uid . "'");
+  //$row = mysqli_fetch_array($q, MYSQLI_ASSOC);
+  echo mysqli_error($dbc);
+  ?>
+  <?php
+while($row = mysqli_fetch_array($q, MYSQLI_ASSOC))
+{
+   echo'<div>' . $row['tableName'] . '</div>' .
+       '<div>' . $row['product_id'] . '</div>';
+}
+  ?>
+   <div>
+   <img src="./images/shirts/blackHoodie.jpg" width="150px" height="150px"/>
+   </div>
+   <div>
+   <p>
+   This item is just a black hoodie, simple.
+   </p>
+   </div>
+   <div>
+   <p>
+   $23.44
+   </p>
+   </div>
+   <div>
+   <p>
+    2
+   </p>
+   </div>
+   <div>
+   <p>
+   $46.88
+   </p>
+   </div>
+  </div>
+    <div> 
+   <div>
+   <img src="./images/shirts/blackHoodie.jpg" width="150px" height="150px"/>
+   </div>
+   <div>
+   <p>
+   This item is just a black hoodie, simple.
+   </p>
+   </div>
+   <div>
+   <p>
+   $23.44
+   </p>
+   </div>
+   <div>
+   <p>
+    2
+   </p>
+   </div>
+   <div>
+   <p>
+   $46.88
+   </p>
+   </div>
+  </div>
+  <div> 
+  <div>
+   <img src="./images/shirts/blackHoodie.jpg" width="150px" height="150px"/>
+   </div>
+   <div>
+   <p>
+   This item is just a black hoodie, simple.
+   </p>
+   </div>
+   <div>
+   <p>
+   $23.44
+   </p>
+   </div>
+   <div>
+   <p>
+    2
+   </p>
+   </div>
+   <div>
+   <p>
+   $46.88
+   </p>
+   </div>
+ </div>
+ <input type="submit" value="Proceed to Checout"/>
+</form>
+</div>

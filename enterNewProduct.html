@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Enter a New Product</title>
+</head>
+<body>
+
+<?php
+if (isset($_POST['category']))
+{
+   $category = $_POST['category'];
+   $name = $_POST['name'];
+   $image = $_POST['image'];
+   $color = $_POST['color'];
+   $price = $_POST['price'];
+
+   $category = strtolower($category);
+
+   $q = "INSERT INTO $category VALUES (NULL, '$name', './images/$category/$image', '$color', '$price')";
+   $r = mysqli_query($dbc, $q);
+if(!$r) echo mysqli_error($dbc);
+else echo 'Success';
+}
+?>
+<form action="enterNewProduct.php" method="post" accept-charset="utf8">
+<p><select name="category">
+<?php
+$r = mysqli_query($dbc, "SELECT * FROM categories");
+if(!$r) echo mysqli_error($dbc);
+
+while($row = mysqli_fetch_array($r, MYSQLI_ASSOC))
+{
+   if($r)
+   {
+      echo '<option value="' . $row['name'] . '">' . $row['name'] . '</option>';
+   }
+}
+?>
+</select></p>
+<p><label for="name">Name of Product </label><input type="text" name="name" size "40"/></p>
+<p><label for="image">Image </label><input type="text" name="image" size "40"/></p>
+<p><label for="color">color </label><input type="text" name="color" size "40"/></p>
+<p><label for="price">Price </label><input type="text" name="price" size "40"/></p>
+<input type="submit" name="submit_button" value="Next &rarr;"/>
+</form>
+
+</body>
+</html>
